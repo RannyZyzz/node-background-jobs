@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  redis-background-jobs:
+    image: redis:alpine3.19
+    container_name: redis-background-jobs
+    ports:
+      - "6379:6379"
+    restart: always
+  
+  server-and-queues:
+    build:
+      context: "./"
+      dockerfile: Dockerfile
+    container_name: server-and-queues
+    restart: always
+    depends_on:
+      - redis-background-jobs
